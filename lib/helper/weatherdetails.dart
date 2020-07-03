@@ -9,6 +9,7 @@ class Weather {
       String url =
           "http://api.weatherstack.com/forecast?access_key=a3fd7937c2b651f30024b0cf5a7a3cfe&query=$city";
       var response = await http.get(url);
+      print(response.body);
 
       if (response.statusCode == 200) {
         weather = WeatherForecast.fromJson(json.decode(response.body));
@@ -17,7 +18,7 @@ class Weather {
         throw Exception('Failed to load album');
       }
     } catch (e) {
-
+print("erroe");
       print(e);
     }
   }

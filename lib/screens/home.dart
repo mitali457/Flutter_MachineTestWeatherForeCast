@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:machinetest/helper/weatherdetails.dart';
 import 'package:machinetest/models/weatherforecast.dart';
+import 'package:intl/intl.dart';
 
 class Homescreen extends StatefulWidget {
   final WeatherForecast weatherdetails;
@@ -14,9 +15,13 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
+  TextEditingController cityController = TextEditingController();
   bool _loading = true;
-  void getWeather() async {
-    await weatherData.getWeather();
+  void getWeather(String text) async {
+      setState(() {
+      _loading = true;
+    });
+    await weatherData.getWeather(city:text );
     setState(() {
       _loading = false;
     });
@@ -25,7 +30,7 @@ class _HomescreenState extends State<Homescreen> {
   @override
   void initState() {
     super.initState();
-    getWeather();
+    getWeather('Kolkata');
     // _loading = true;
   }
 
@@ -35,11 +40,11 @@ class _HomescreenState extends State<Homescreen> {
     return Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
             stops: [0.1, 0.5, 0.7, 0.9],
             colors: [
-              Colors.purple[800],
+              Colors.pink[900],
               Colors.purple[700],
               Colors.purple[600],
               Colors.purple[400],
@@ -58,8 +63,8 @@ class _HomescreenState extends State<Homescreen> {
                       children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 60, left: 50),
-                            child: Text(
-                              'Friday',
+                            child: Text(DateFormat.yMMMEd().format(new DateTime.now()),
+                             // weatherData.weather.current.isDay,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 28,
@@ -72,11 +77,11 @@ class _HomescreenState extends State<Homescreen> {
                             child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    weatherData.weather.location.localtime,
+                                  Text(DateFormat.Hm().format(DateTime.parse( weatherData.weather.location.localtime)),
+                                   
                                     style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 25,
+                                        fontSize: 35,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   SizedBox(width: 10),
@@ -112,25 +117,38 @@ class _HomescreenState extends State<Homescreen> {
                               Text(
                                 '${weatherData.weather.current.temperature.round().toString()} ° c',
                                 style: TextStyle(
-                                    fontSize: 25,
+                                    fontSize: 35,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
                               ),
                               Container(
                                 color: Colors.white,
-                                height: 30,
+                                height: 50,
                                 width: 2,
                               ),
 
                               //Divider(color: Colors.black,),
 
-                              Text(
-                                weatherData.weather.current.weatherDescriptions
-                                    .toString(),
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
+                              Column(
+                                children: [
+                                  Text(
+                                    weatherData.weather.current.weatherDescriptions[0]
+                                        ,
+                                    style: TextStyle(
+                                        fontSize: 30,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(height:10),
+                                   Text(
+                                    weatherData.weather.location.country
+                                        .toString(),
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
                               )
                             ],
                           ),
@@ -158,6 +176,7 @@ class _HomescreenState extends State<Homescreen> {
                                             color: Colors.purple, blurRadius: 5)
                                       ]),
                                   child: TextFormField(
+                                    controller: cityController,
                                     decoration: InputDecoration(
                                       focusedBorder: InputBorder.none,
                                       hintText: 'Enter a City name',
@@ -169,7 +188,7 @@ class _HomescreenState extends State<Homescreen> {
                                 padding:
                                     const EdgeInsets.only(left: 20, top: 300),
                                 child: Container(
-                                  width: 100,
+                                  width: 70,
                                   height: 45,
                                   decoration: BoxDecoration(
                                       //border: Border.all(),
@@ -181,7 +200,9 @@ class _HomescreenState extends State<Homescreen> {
                                             color: Colors.purple, blurRadius: 5)
                                       ]),
                                   child: IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                  getWeather(cityController.text);
+                                    },
                                     icon: Icon(
                                       Icons.search,
                                       color: Colors.purple,

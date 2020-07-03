@@ -72,7 +72,6 @@ class Location {
   String localtime;
   int localtimeEpoch;
   String utcOffset;
-  String day;
 
   Location(
       {this.name,
@@ -122,7 +121,7 @@ class Current {
   int windDegree;
   String windDir;
   int pressure;
-  double precip;
+  // double precip;
   int humidity;
   int cloudcover;
   int feelslike;
@@ -140,7 +139,7 @@ class Current {
       this.windDegree,
       this.windDir,
       this.pressure,
-      this.precip,
+      // this.precip,
       this.humidity,
       this.cloudcover,
       this.feelslike,
@@ -158,7 +157,7 @@ class Current {
     windDegree = json['wind_degree'];
     windDir = json['wind_dir'];
     pressure = json['pressure'];
-    precip = json['precip'];
+    // precip = json['precip'];
     humidity = json['humidity'];
     cloudcover = json['cloudcover'];
     feelslike = json['feelslike'];
@@ -178,7 +177,7 @@ class Current {
     data['wind_degree'] = this.windDegree;
     data['wind_dir'] = this.windDir;
     data['pressure'] = this.pressure;
-    data['precip'] = this.precip;
+    // data['precip'] = this.precip;
     data['humidity'] = this.humidity;
     data['cloudcover'] = this.cloudcover;
     data['feelslike'] = this.feelslike;
@@ -217,7 +216,7 @@ class ForecastTodayDate {
   int maxtemp;
   int avgtemp;
   int totalsnow;
-  double sunhour;
+  // double sunhour;
   int uvIndex;
 
   ForecastTodayDate(
@@ -228,7 +227,7 @@ class ForecastTodayDate {
       this.maxtemp,
       this.avgtemp,
       this.totalsnow,
-      this.sunhour,
+      // this.sunhour,
       this.uvIndex});
 
   ForecastTodayDate.fromJson(Map<String, dynamic> json) {
@@ -239,7 +238,7 @@ class ForecastTodayDate {
     maxtemp = json['maxtemp'];
     avgtemp = json['avgtemp'];
     totalsnow = json['totalsnow'];
-    sunhour = json['sunhour'];
+    // sunhour = json['sunhour'];
     uvIndex = json['uv_index'];
   }
 
@@ -254,7 +253,7 @@ class ForecastTodayDate {
     data['maxtemp'] = this.maxtemp;
     data['avgtemp'] = this.avgtemp;
     data['totalsnow'] = this.totalsnow;
-    data['sunhour'] = this.sunhour;
+    // data['sunhour'] = this.sunhour;
     data['uv_index'] = this.uvIndex;
     return data;
   }
